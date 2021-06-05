@@ -1,5 +1,11 @@
 # Teaching-HEIGVD-RES-2020-Labo-Orchestra
 
+###### Alessando Parrino & Dylan Canton
+
+###### 04.06.2021
+
+---
+
 ## Admin
 
 * **You can work in groups of 2 students**.
@@ -104,55 +110,53 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | --- | --- |
 |Question | How can we represent the system in an **architecture diagram**, which gives information both about the Docker containers, the communication protocols and the commands? |
-| | *Insert your diagram here...* |
+| | ![architectureDiagram](images\architectureDiagram.PNG) |
 |Question | Who is going to **send UDP datagrams** and **when**? |
-| | *Enter your response here...* |
+| | *The musician will send a UDP datagram, it is sent every second (corresponding to each note he plays).* |
 |Question | Who is going to **listen for UDP datagrams** and what should happen when a datagram is received? |
-| | *Enter your response here...* |
+| | *The listener will listen to receive UDP datagrams on the specified port.  When it receives a datagram, it will then add the musician (the sender) in a data structure and send it to the client in JSON format.* |
 |Question | What **payload** should we put in the UDP datagrams? |
-| | *Enter your response here...* |
+| | *The UUID and the instrument's sound* |
 |Question | What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures? |
-| | *Enter your response here...* |
-
+| | *We are going to use a `map` in order to have an Instrument / Sound correspondence.<br />This structure will be updated on both sides (sender and receiver) if we want to add a new musician.  <br />On the sender side, we will use it to get the sound corresponding to the musician's instrument in order to transmit it to the listener.  <br />On the receiver side, we will conversely use it to get the instrument corresponding to the sound received by the musician.* |
 
 ## Task 2: implement a "musician" Node.js application
 
 | #  | Topic |
 | ---  | --- |
 |Question | In a JavaScript program, if we have an object, how can we **serialize it in JSON**? |
-| | *Enter your response here...*  |
+| | *JSON.stringify(myObject)*; |
 |Question | What is **npm**?  |
-| | *Enter your response here...*  |
+| | *It is a Node.Js package manager which also allows the management of dependencies using 2 files: `package.json` and` package-lock.json`.* |
 |Question | What is the `npm install` command and what is the purpose of the `--save` flag?  |
-| | *Enter your response here...*  |
+| | *This command installs a package and all the packages it depends on in a `node_modules` folder. <br />The ` --save` option allows you to save the installed packages in the dependencies section of the `package.json` file. However, this option is no longer needed since version **5.0.0** of npm because npm automatically saves them with the `npm install` command.* |
 |Question | How can we use the `https://www.npmjs.com/` web site?  |
-| | *Enter your response here...*  |
+| | *This site allows you to find packages to install later with npm. The site gives us detailed information on each package such as the command to install it, its version, its dependencies, the type of license used.* |
 |Question | In JavaScript, how can we **generate a UUID** compliant with RFC4122? |
-| | *Enter your response here...*  |
+| | *First we install the package with npm: `npm install uuid`. <br />Then in the code, we include it: `const {v4: uuidv4} = require ('uuid');` <br />Finally, we can generate a UUID with: `uuidv4 ();`* |
 |Question | In Node.js, how can we execute a function on a **periodic** basis? |
-| | *Enter your response here...*  |
+| | *setInterval(myFunction, intervalInMilliseconds)* |
 |Question | In Node.js, how can we **emit UDP datagrams**? |
-| | *Enter your response here...*  |
+| | *First we must include a standard Node.js module to work with UDP:  `var udp = require ('dgram');`<br/> Then we create a UDP server:  `var myServer = udp.createSocket ('udp4'); `<br/>You can then emit with: `myServer.send ();`* |
 |Question | In Node.js, how can we **access the command line arguments**? |
-| | *Enter your response here...*  |
-
+| | We access the arguments with the command: `process.argv [noArg]`.  <br />Knowing that : <br />process.argv [0] : Path to the node executable<br />process.argv [1] : Path to the script file<br />process.argv [2] : First argument<br />process.argv [3] : Second argument<br />process.argv [x] : x argument |
 
 ## Task 3: package the "musician" app in a Docker image
 
 | #  | Topic |
 | ---  | --- |
 |Question | How do we **define and build our own Docker image**?|
-| | *Enter your response here...*  |
+| | *docker build -t res/musician ./myDockerfile<br />Where `res/musician` is the name of the chosen image.* |
 |Question | How can we use the `ENTRYPOINT` statement in our Dockerfile?  |
-| | *Enter your response here...*  |
+| | *ENTRYPOINT [ "node", "musician.js" ]<br /> It defines a list of string corresponding to a command which will be executed when launching the docker, in our case, the launched command will be `node musician.js PARAMETER` where the PARAMETER will be the instrument passing with the `docker run` command.* |
 |Question | After building our Docker image, how do we use it to **run containers**?  |
-| | *Enter your response here...*  |
+| | *docker run -d -p 2205:2205 res/musician MY_INSTRUMENT* |
 |Question | How do we get the list of all **running containers**?  |
-| | *Enter your response here...*  |
+| | *docker ps* |
 |Question | How do we **stop/kill** one running container?  |
-| | *Enter your response here...*  |
+| | *docker kill CONTAINER_ID or docker kill CONTAINER_NAME<br />docker stop CONTAINER_ID or docker stop CONTAINER_NAME* |
 |Question | How can we check that our running containers are effectively sending UDP datagrams?  |
-| | *Enter your response here...*  |
+| | *We can see the exchange of packets using a network sniffer, like Wireshark.* |
 
 
 ## Task 4: implement an "auditor" Node.js application
