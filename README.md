@@ -164,15 +164,15 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | ---  | ---  |
 |Question | With Node.js, how can we listen for UDP datagrams in a multicast group? |
-| | *Enter your response here...*  |
+| | You must first create an udp socket, which in this case was created using the dgram module and to be able to receive datagrams from a certain multicast group we need to join it using addMembership method. |
 |Question | How can we use the `Map` built-in object introduced in ECMAScript 6 to implement a **dictionary**?  |
-| | *Enter your response here...* |
+| | **Map** is a collection of elements where each element is stored as a ***{Key, value}*** pair. We use it to create a **dictionary** between the instrument and the sound and for storing musicians. |
 |Question | How can we use the `Moment.js` npm module to help us with **date manipulations** and formatting?  |
-| | *Enter your response here...* |
+| | [Moment.js](https://momentjs.com/) is used to retrieve the current date, and to perform the difference in seconds between two dates of the same format. |
 |Question | When and how do we **get rid of inactive players**?  |
-| | *Enter your response here...* |
+| | When they have been inactive for more than 5 seconds. If an inactive musician is detected during a TCP connection, it is removed from the list of active musicians. |
 |Question | How do I implement a **simple TCP server** in Node.js?  |
-| | *Enter your response here...* |
+| | Using the **net** module, we can easily create a TCP server ***(net.Server)*** using the **`net.createServer()`** method, passing it a function that it should execute once a connection is established. We have additionally indicated the listening port using the **`listen`** method. |
 
 
 ## Task 5: package the "auditor" app in a Docker image
@@ -180,7 +180,7 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | ---  | --- |
 |Question | How do we validate that the whole system works, once we have built our Docker image? |
-| | *Enter your response here...* |
+| | To make sure the system worked we first ran **`res/auditor`** containers with the command **"`docker run -d -p 2205:2205 res/auditor`"** so that it would listen on port 2205, then we ran some **`res/musician`** containers with different instruments. Once this was done we verified that with the command **`telenet localhost 2205`** we get a payload containing the list of **active musicians**, we also observed that once a musician container was **stopped/deleted** it disappeared from the json payload after 5 seconds. Finally, for a more in-depth testing we used the script already provided **`./validate.sh`** |
 
 
 ## Constraints
