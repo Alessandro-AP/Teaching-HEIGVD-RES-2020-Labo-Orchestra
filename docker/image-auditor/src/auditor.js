@@ -72,12 +72,22 @@ function Musician(id, instrument, currentDate) {
 }
 
 /**
+ * Check if the sound is valid
+ * @param sound The sound for check
+ */
+function validAuditor(sound){
+    if(!(INSTRUMENTS.has(sound))){
+        console.log("The sound isn't found !");
+        process.exit(-1);
+    }
+    return INSTRUMENTS.get(sound);
+}
+
+/**
  * Listens to a message (UDP) containing a musician in json format, 
  * each message is added to the list of musicians.
  */
 socket.on('message', function (msg) {
   const json = JSON.parse(msg);
-  musicians.set(json.uuid, new Musician(json.uuid, INSTRUMENTS.get(json.sound), new Date()));
+  musicians.set(json.uuid, new Musician(json.uuid, validAuditor(json.sound), new Date()));
 });
-
-
