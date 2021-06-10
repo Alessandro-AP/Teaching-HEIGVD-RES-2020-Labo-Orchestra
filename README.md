@@ -139,7 +139,7 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 |Question | In Node.js, how can we **emit UDP datagrams**? |
 | | *First we must include a standard Node.js module to work with UDP:  `var udp = require ('dgram');`<br/> Then we create a UDP server:  `var myServer = udp.createSocket ('udp4'); `<br/>You can then emit with: `myServer.send ();`* |
 |Question | In Node.js, how can we **access the command line arguments**? |
-| | We access the arguments with the command: `process.argv [noArg]`.  <br />Knowing that : <br />process.argv [0] : Path to the node executable<br />process.argv [1] : Path to the script file<br />process.argv [2] : First argument<br />process.argv [3] : Second argument<br />process.argv [x] : x argument |
+| | *We access the arguments with the command: `process.argv [noArg]`.  <br />Knowing that : <br />process.argv [0] : Path to the node executable<br />process.argv [1] : Path to the script file<br />process.argv [2] : First argument<br />process.argv [3] : Second argument<br />process.argv [x] : x argument* |
 
 ## Task 3: package the "musician" app in a Docker image
 
