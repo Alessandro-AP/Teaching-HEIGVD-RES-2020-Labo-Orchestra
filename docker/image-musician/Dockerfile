@@ -11,4 +11,4 @@ WORKDIR /opt/app
 RUN npm install 
 
 # Command to be executed when running a container
-ENTRYPOINT ["node", "/opt/app/musician.js"]
+ENTRYPOINT ["node", "musician.js"]
