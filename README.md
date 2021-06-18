@@ -114,7 +114,7 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 |Question | Who is going to **send UDP datagrams** and **when**? |
 | | *The musician will send a UDP datagram, it is sent every second (corresponding to each note he plays).* |
 |Question | Who is going to **listen for UDP datagrams** and what should happen when a datagram is received? |
-| | *The listener will listen to receive UDP datagrams on the specified port.  When it receives a datagram, it will then add the musician (the sender) in a data structure and send it to the client in JSON format.* |
+| | *The auditor will listen to receive UDP datagrams on the specified port.  When it receives a datagram, it will then add the musician (the sender) in a data structure and send it to the client in JSON format.* |
 |Question | What **payload** should we put in the UDP datagrams? |
 | | *The UUID and the instrument's sound* |
 |Question | What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures? |
